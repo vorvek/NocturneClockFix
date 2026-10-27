@@ -71,11 +71,12 @@ Double-click `Remove Clock Fix.cmd`. You can also copy `nocturne.exe.clockfix-ba
 - **Windows says that running scripts is disabled**: start the patch with the `.cmd` files. They allow
   only this script to run. They do not change any Windows setting.
 
-## Tested version
+## Versions
 
-| MD5 of `nocturne.exe` | Size | Result |
-|---|---|---|
-| `24acd9b17f6846225123a9d8354b09e1` | 1,948,160 bytes | Tested in the game: no menu freezes |
+| MD5 of `nocturne.exe` | Version | Size | Result |
+|---|---|---|---|
+| `24acd9b17f6846225123a9d8354b09e1` | 1.00.52 | 1,948,160 bytes | Tested in the game: no menu freezes |
+| `cb98ab8bd3f544bcf1fbeda8b963bf8c` | 1.00.47 (English retail disc) | 1,942,016 bytes | Same clock code as 1.00.52; the patch applies. Not tested in the game |
 
 The patch also accepts other versions if it finds the same code exactly once. Those versions are not
 tested. Reports are welcome.

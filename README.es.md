@@ -75,11 +75,12 @@ Haz doble clic en `Remove Clock Fix.cmd`. También puedes copiar `nocturne.exe.c
 - **Windows dice que la ejecución de scripts está deshabilitada**: inicia el parche con los archivos
   `.cmd`. Permiten que se ejecute solo este script. No cambian ninguna configuración de Windows.
 
-## Versión probada
+## Versiones
 
-| MD5 de `nocturne.exe` | Tamaño | Resultado |
-|---|---|---|
-| `24acd9b17f6846225123a9d8354b09e1` | 1.948.160 bytes | Probado en el juego: sin bloqueos en los menús |
+| MD5 de `nocturne.exe` | Versión | Tamaño | Resultado |
+|---|---|---|---|
+| `24acd9b17f6846225123a9d8354b09e1` | 1.00.52 | 1.948.160 bytes | Probado en el juego: sin bloqueos en los menús |
+| `cb98ab8bd3f544bcf1fbeda8b963bf8c` | 1.00.47 (disco original en inglés) | 1.942.016 bytes | Mismo código de reloj que la 1.00.52; el parche se aplica. No probado en el juego |
 
 El parche también acepta otras versiones si encuentra el mismo código exactamente una vez. Esas versiones
 no están probadas. Los informes son bienvenidos.
