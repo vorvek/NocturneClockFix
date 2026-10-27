@@ -4,3 +4,4 @@
 *.pod
 *.clockfix-backup
 *.orig
+dist/
