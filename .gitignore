@@ -1,0 +1,6 @@
+# Never commit game files
+*.exe
+*.dll
+*.pod
+*.clockfix-backup
+*.orig
