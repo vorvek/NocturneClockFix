@@ -1,102 +1,95 @@
 # Nocturne Clock Fix
 
-Fixes the long freezes in **Nocturne** (Terminal Reality, 1999) on modern PCs:
+*[Leer en español](README.es.md)*
 
-- the menus freeze or react only after many seconds,
-- the step from the intro to the main menu takes a long time,
-- the in-game menus freeze for up to 20 seconds while one CPU core runs at 100%.
+A small patch for **Nocturne** (Terminal Reality, 1999). It stops the long freezes in the menus on
+modern PCs.
 
-The freezes are random: often, but not always.
+## The problem
+On a modern PC, Nocturne often freezes for 5 to 20 seconds:
 
-The fix changes 2 bytes in your own `nocturne.exe`. This repository does not contain any game file.
+- in the main menu and its screens,
+- between the intro video and the main menu,
+- in the in-game menus.
 
-## Requirements
-- Nocturne for Windows, installed. The tested build is listed below.
-- Windows 10 or 11 (Windows PowerShell 5.1 is part of Windows).
+During a freeze, one CPU core runs at 100%. The freezes are random. They happen often, but not always.
+
+**Why:** the game counts time in small steps, and it waits for the next step in many menus. Each time it
+reads the clock, it drops the fraction of a step. On a 1999 PC, each read took long enough to count. A
+modern CPU is so fast that each read counts as 0, so the game clock stops. The game then waits in a loop
+until, by chance, one read takes long enough.
+
+## What this patch does, and what it does not do
+- It changes 2 bytes in your `nocturne.exe`. After that, the game uses its other, built-in clock
+  (`timeGetTime`), which does not lose time.
+- **It fixes only these timer freezes.** It does **not** make Nocturne run on modern Windows by itself.
+  You still need the usual fixes, such as DDrawCompat. See [Before you start](#before-you-start).
+- It does not change graphics, sound, saves or game files other than `nocturne.exe`.
+- This repository does not contain any game files. You need your own copy of the game.
+
+## Before you start
+Make the game start and run first. The
+[PCGamingWiki page for Nocturne](https://www.pcgamingwiki.com/wiki/Nocturne) explains all the steps. In
+short:
+
+- Install the latest official patch (Patch 2, build 1.00.52) if your copy needs it.
+- Install [DDrawCompat](https://github.com/narzoul/DDrawCompat/releases). PCGamingWiki calls it
+  essential. It fixes the graphics, the intro video and the startup errors, and it limits the frame rate.
+- The SafeDisc copy protection of some European discs does not work on Windows Vista and later.
+
+When the game runs but the menus freeze, apply this patch.
 
 ## Install
 1. Close Nocturne.
-2. Copy `NocturneClockFix.ps1`, `Apply Clock Fix.cmd` and `Remove Clock Fix.cmd` into the Nocturne folder,
-   the folder that contains `nocturne.exe`.
-3. Double-click `Apply Clock Fix.cmd`.
-4. Look for `Done.` in the window. Then press a key to close it.
+2. Download `NocturneClockFix-1.0.0.zip` from the
+   [Releases page](https://github.com/vorvek/NocturneClockFix/releases).
+3. Extract the zip. Copy these 3 files into the Nocturne folder (the folder with `nocturne.exe`):
+   - `NocturneClockFix.ps1`
+   - `Apply Clock Fix.cmd`
+   - `Remove Clock Fix.cmd`
+4. Double-click `Apply Clock Fix.cmd`.
+5. Look for `Done.` in the window. Then press a key to close it.
+6. Start the game.
 
-The script saves the original file as `nocturne.exe.clockfix-backup` before it writes.
-
-From a PowerShell prompt you can also give the folder:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\NocturneClockFix.ps1 -GameDir "C:\Games\Nocturne"
-```
-
-`-Check` only reports whether the fix is applied. It changes nothing.
+The patch saves the original file as `nocturne.exe.clockfix-backup` before it writes.
 
 ## Uninstall
-Double-click `Remove Clock Fix.cmd`, or run the script with `-Undo`. This writes the 2 original bytes
-back. You can also copy `nocturne.exe.clockfix-backup` over `nocturne.exe`.
+Double-click `Remove Clock Fix.cmd`. You can also copy `nocturne.exe.clockfix-backup` over
+`nocturne.exe`.
 
-## Troubleshooting
-- **"Windows refused to write nocturne.exe"**: the game is in a protected folder such as Program Files.
+## If something goes wrong
+- **"Windows refused to write nocturne.exe"**: the game is in a protected folder, such as Program Files.
   Right-click `Apply Clock Fix.cmd` and select **Run as administrator**.
-- **"Found 0 matching sites"**: your `nocturne.exe` is a build that the script does not know, or it is
-  already modified by another tool. Nothing was changed. Please open an issue and include the MD5 that the
-  script shows.
+- **"Found 0 matching sites"**: the patch does not know your version of `nocturne.exe`, or another tool
+  already changed the file. The patch changed nothing. Please
+  [open an issue](https://github.com/vorvek/NocturneClockFix/issues) and include the MD5 that the window
+  shows.
 - **"Nocturne is running"**: close the game first.
-- **Windows SmartScreen or "running scripts is disabled"**: the `.cmd` files start PowerShell with
-  `-ExecutionPolicy Bypass` for this script only. They do not change any system setting.
+- **Windows says that scripts are disabled**: start the patch with the `.cmd` files. They allow this one
+  script to run. They do not change any Windows setting.
 
-## Tested builds
+## Tested version
 
-| MD5 of `nocturne.exe` | Size | Date | Status |
-|---|---|---|---|
-| `24acd9b17f6846225123a9d8354b09e1` | 1,948,160 bytes | 1999-11-02 | Tested in the game: fixed |
+| MD5 of `nocturne.exe` | Size | Result |
+|---|---|---|
+| `24acd9b17f6846225123a9d8354b09e1` | 1,948,160 bytes | Tested in the game: menu freezes gone |
 
-Other builds (for example, after the official 1.00.52 patch) are patched only if the script finds the
-code pattern exactly once and the jump target is the expected code. These builds were not tested in
-the game. Reports are welcome.
+The patch also accepts other versions if it finds the same code exactly once. These versions are not
+tested. Reports are welcome.
 
-## Compatibility
-- Works with or without DDrawCompat or dgVoodoo2. The fix is in the game's clock, not in the graphics.
-- Saves are not affected.
-- Single-player only. Nocturne has no online mode.
+## Technical details
+- Patch site in the tested version: file offset `0x157C08`, address `0x558808`. The bytes change from
+  `0F 85` (`jne`) to `90 E9` (`nop; jmp`). Normally the game uses `QueryPerformanceCounter`, and it uses
+  its `timeGetTime` clock only if that counter is missing. After the patch, it always uses `timeGetTime`.
+- Measured with a sampling profiler on a Ryzen 9 9950X3D. Before the patch, the main thread ran at 100%
+  CPU for 40 of 81 seconds in the menus. After the patch, it did so for 0 of 23 seconds.
+- The game clock is a 32-bit value, so it wraps around about every 61 minutes, also in the original game.
+  At the wrap, the game can lose at most one frame of game time. It does not freeze.
 
-## How it works
-Nocturne keeps time in steps of 1/18 second, like the old DOS timer. Many menu and loading screens wait
-in a loop for the next step.
-
-By default, the game reads the Windows high-resolution timer (`QueryPerformanceCounter`) on each pass of
-that loop. It adds the time since the last read as a whole number of clock units and drops the fraction.
-On a 1999 PC, one pass of the loop took long enough to add at least 1 unit. On a modern CPU, one pass
-takes less than a microsecond, so each pass adds 0 and the clock stops. The loop then runs at 100% CPU
-until Windows interrupts the game long enough for one pass to count. That can take many seconds.
-
-The game also has a second clock mode based on `timeGetTime`. It reads the absolute time, so it loses no
-time. The game uses it only if the high-resolution timer is missing. The fix changes the conditional
-jump to that mode (`jne`, bytes `0F 85`) into an unconditional jump (`nop; jmp`, bytes `90 E9`). The game
-then always uses the `timeGetTime` clock.
-
-Details for the tested build: virtual address `0x558808`, file offset `0x157C08`.
-
-Measured on a Ryzen 9 9950X3D with a sampling profiler. Before the fix, the main thread ran at 100% CPU
-for 40 of 81 seconds in the menus. After the fix, it did so for 0 of 23 seconds through the same menus.
-
-Known limit: the game's clock is a 32-bit value, so it wraps around about every 61 minutes. The unpatched
-game has the same limit. Most of the game's timers subtract two clock values, and that stays correct
-across the wrap. One group of timers first divides the clock value with signed math, so they see one bad
-time step when the value crosses the signed limit. The game already limits that step to the range 0 to 2
-seconds. So you get at most one frame in which game time does not advance, about once per hour. There
-is no freeze. Very long sessions were not tested in the game.
-
-With the fix, the clock value comes from `timeGetTime`, which counts from Windows start. So the first
-wrap can come at any time in a session. In the unpatched game, the clock starts at 0 when the game
-starts.
-
-## Credits
-- Analysis, the patch and this script: made with Claude Code (Claude Opus 5.5, an AI model by Anthropic),
-  with testing by the repository owner in the real game. The agent used the
-  [universal-modder](https://github.com/rehan-remade/universal-modder) toolkit.
+## Credits and license
+- Analysis and patch made with Claude Code (Claude Opus 5.5, an AI model by Anthropic), with the
+  [universal-modder](https://github.com/rehan-remade/universal-modder) toolkit. Tested in the game by
+  [vorvek](https://github.com/vorvek).
 - Nocturne is a game by Terminal Reality. This project is not affiliated with Terminal Reality or any
-  rights holder. You need your own copy of the game.
-
-## License
-MIT. See [LICENSE](LICENSE).
+  rights holder.
+- License: MIT. See [LICENSE](LICENSE).
