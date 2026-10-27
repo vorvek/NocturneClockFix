@@ -47,11 +47,11 @@ Cuando el juego funcione pero los menús se bloqueen, aplica este parche.
 ## Instalación
 1. Descarga `NocturneClockFix-1.0.0.zip` de la
    [página de versiones (Releases)](https://github.com/vorvek/NocturneClockFix/releases).
-2. Descomprime el zip. Copia estos 3 archivos en la carpeta de Nocturne (la carpeta donde está
-   `nocturne.exe`):
-   - `NocturneClockFix.ps1`
-   - `Apply Clock Fix.cmd`
-   - `Remove Clock Fix.cmd`
+2. Descomprime el zip directamente en la carpeta de Nocturne (la carpeta donde está `nocturne.exe`).
+   `Apply Clock Fix.cmd` tiene que quedar junto a `nocturne.exe`, no en una subcarpeta.
+   - Con 7-Zip o WinRAR, usa **Extraer aquí** dentro de la carpeta de Nocturne.
+   - **Extraer todo...** de Windows propone una subcarpeta nueva llamada `NocturneClockFix-1.0.0`.
+     Borra esa última parte de la ruta antes de pulsar **Extraer**.
 3. Haz doble clic en `Apply Clock Fix.cmd`.
 4. Comprueba que la ventana muestra `Done.` (hecho). Después, pulsa una tecla para cerrarla.
 5. Inicia el juego.

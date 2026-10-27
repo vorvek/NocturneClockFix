@@ -44,11 +44,11 @@ When the game runs but the menus freeze, apply this patch.
 ## Install
 1. Download `NocturneClockFix-1.0.0.zip` from the
    [Releases page](https://github.com/vorvek/NocturneClockFix/releases).
-2. Extract the zip. Copy these 3 files into the Nocturne folder (the folder that contains
-   `nocturne.exe`):
-   - `NocturneClockFix.ps1`
-   - `Apply Clock Fix.cmd`
-   - `Remove Clock Fix.cmd`
+2. Extract the zip directly into the Nocturne folder (the folder that contains `nocturne.exe`).
+   `Apply Clock Fix.cmd` must be next to `nocturne.exe`, not in a subfolder.
+   - With 7-Zip or WinRAR, use **Extract here** inside the Nocturne folder.
+   - Windows' **Extract All...** proposes a new subfolder named `NocturneClockFix-1.0.0`. Remove
+     that last part from the path before you click **Extract**.
 3. Double-click `Apply Clock Fix.cmd`.
 4. Check that the window shows `Done.`. Then press a key to close it.
 5. Start the game.
