@@ -80,8 +80,16 @@ Details for the tested build: virtual address `0x558808`, file offset `0x157C08`
 Measured on a Ryzen 9 9950X3D with a sampling profiler. Before the fix, the main thread ran at 100% CPU
 for 40 of 81 seconds in the menus. After the fix, it did so for 0 of 23 seconds through the same menus.
 
-Known limit: the game's 32-bit clock value wraps around about once per hour. The unpatched game has the
-same limit. Very long sessions were not tested.
+Known limit: the game's clock is a 32-bit value, so it wraps around about every 61 minutes. The unpatched
+game has the same limit. Most of the game's timers subtract two clock values, and that stays correct
+across the wrap. One group of timers first divides the clock value with signed math, so they see one bad
+time step when the value crosses the signed limit. The game already limits that step to the range 0 to 2
+seconds. So you get at most one frame in which game time does not advance, about once per hour. There
+is no freeze. Very long sessions were not tested in the game.
+
+With the fix, the clock value comes from `timeGetTime`, which counts from Windows start. So the first
+wrap can come at any time in a session. In the unpatched game, the clock starts at 0 when the game
+starts.
 
 ## Credits
 - Analysis, the patch and this script: made with Claude Code (Claude Opus 5.5, an AI model by Anthropic),
