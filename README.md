@@ -87,7 +87,8 @@ tested. Reports are welcome.
   its `timeGetTime` clock only if that counter does not exist. After the patch, it always uses
   `timeGetTime`.
 - The game clock is a 32-bit value, so it wraps around about every 61 minutes, also in the original game.
-  At that moment, the game can lose at most one frame of game time. It does not freeze.
+  At that moment, the game can lose at most one frame of game time. As far as I can tell, there's no visual or input feedback
+  for this, no freezes or anything.
 
 ## Credits and license
 - Nocturne is a game by Terminal Reality. This project is not affiliated with Terminal Reality or any
