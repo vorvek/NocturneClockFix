@@ -98,7 +98,7 @@ Haz doble clic en `Remove Clock Fix.cmd`. Quita las dos correcciones. También p
 
 | MD5 de `nocturne.exe` | Versión | Tamaño | Resultado |
 |---|---|---|---|
-| `24acd9b17f6846225123a9d8354b09e1` | 1.00.52 | 1.948.160 bytes | Reloj: probado en el juego, sin bloqueos en los menús. Telas: probado con el propio código de telas del juego en una CPU emulada |
+| `24acd9b17f6846225123a9d8354b09e1` | 1.00.52 | 1.948.160 bytes | Las dos correcciones probadas en el juego |
 | `cb98ab8bd3f544bcf1fbeda8b963bf8c` | 1.00.47 (disco original en inglés) | 1.942.016 bytes | Mismo código de reloj que la 1.00.52; la corrección del reloj se aplica. No probado en el juego. La corrección de las telas no se aplica |
 
 La corrección del reloj también acepta otras versiones si encuentra el mismo código exactamente una vez.
